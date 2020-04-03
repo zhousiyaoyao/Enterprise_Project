@@ -1,4 +1,4 @@
-# ipvue
+# project1
 
 ## Project setup
 ```
