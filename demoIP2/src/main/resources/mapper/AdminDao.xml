@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zsy.demo.dao.AdminDao">
+    <select id="login" resultType="com.zsy.demo.entity.Admin" parameterType="String">
+        select * from admins where a_name = #{a_name}
+    </select>
+
+    <insert id="insert" parameterType="com.zsy.demo.entity.Admin">
+        insert into
+        admins(
+        a_name,
+        a_password
+        )
+        values(
+        #{a_name},
+        #{a_password}
+        )
+    </insert>
+
+    <select id="findByName" parameterType="String" resultType="com.zsy.demo.entity.Admin">
+        select a_name from admins where a_name = #{a_name}
+    </select>
+
+</mapper>

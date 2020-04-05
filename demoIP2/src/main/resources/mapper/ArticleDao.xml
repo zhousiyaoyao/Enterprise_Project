@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zsy.demo.dao.ArticleDao">
+
+    <select id="queryArticleById" parameterType="int" resultType="com.zsy.demo.entity.Article">
+        SELECT r_id,r_author,r_summary,r_content,r_date,r_verify,r_publish,r_status
+        FROM article
+        WHERE r_id=#{ID}
+    </select>
+
+    <select id="queryArticle0" resultType="com.zsy.demo.entity.Article">
+        SELECT r_id,r_author,r_summary,r_content,r_date,r_verify,r_publish,r_status
+        FROM article
+        where r_status = 0
+        ORDER BY r_id
+    </select>
+
+    <select id="queryArticle1" resultType="com.zsy.demo.entity.Article">
+        SELECT r_id,r_author,r_summary,r_content,r_date,r_verify,r_publish,r_status
+        FROM article
+        where r_status = 1
+        ORDER BY r_id
+    </select>
+
+    <delete id="delete" parameterType="int">
+        delete from article where r_id = #{r_id}
+    </delete>
+
+    <update id="recover" parameterType="int">
+        update article set r_status = 0 where r_id = #{r_id}
+    </update>
+
+    <update id="recycle" parameterType="int">
+        update article set r_status = 1 where r_id = #{r_id}
+    </update>
+
+    <insert id="saveArticle" parameterType="com.zsy.demo.entity.Article">
+        insert into article(
+        r_author,
+        r_summary,
+        r_content,
+        r_date,
+        r_verify,
+        r_publish,
+        r_status)
+        values(
+        #{r_author},
+        #{r_summary},
+        #{r_content},
+        #{r_date},
+        #{r_verify},
+        #{r_publish},
+        #{r_status}
+        )
+    </insert>
+
+    <select id="findById" parameterType="int" resultType="com.zsy.demo.entity.Article">
+        select * from article where r_id = #{r_id}
+    </select>
+</mapper>
