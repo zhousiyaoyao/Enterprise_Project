@@ -149,79 +149,79 @@
             cancel() {
                 this.showItemId = ''
              },
-          refresh(){
-            this.$axios({
-                method: "get",
-                url: "http://127.0.0.1:8888/demo/super/getarticlebyid",
-                params: {
-                    ID: parseInt(this.$route.query.ID)
-                }
-            }).then(response => {
-                this.title = response.data.article.r_summary
-                this.value = response.data.article.r_content
-                this.author = response.data.article.r_author
-                this.date = response.data.article.r_date.slice(0,10)
-                // this.orders = response.data.articleList
-            }).catch(error => console.log(error, "error"))
-          },
-          getComment(){
-            this.$axios({
-                method: "get",
-                url: "http://127.0.0.1:8888/demo/super/listword",
-                params: {
-                    r_id: parseInt(this.$route.query.ID)
-                }
-            }).then(response => {
-                this.words = response.data.Words
-            }).catch(error => console.log(error, "error"))
-          },
-          getReply(){
-            this.$axios({
-                method: "get",
-                url: "http://127.0.0.1:8888/demo/super/listreply",
-                params: {
-                    r_id: parseInt(this.$route.query.ID)
-                }
-            }).then(response => {
-                this.replys = response.data.Reply
-                this.words.forEach((ele) => {
-                    Object.assign(ele, {replys: []})
-                    Object.assign(ele, {Avator: 'http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg'})
-                })
-                for(var i = 0; i < this.replys.length; i++){
-                    for(var j = 0; j < this.words.length; j++){
-                        if(this.replys[i].lr_for_words == this.words[j].lw_id){
-                            this.words[j].replys.push(this.replys[i])
+            refresh(){
+                this.$axios({
+                    method: "get",
+                    url: "http://127.0.0.1:8888/demo/super/getarticlebyid",
+                    params: {
+                        ID: parseInt(this.$route.query.ID)
+                    }
+                }).then(response => {
+                    this.title = response.data.article.r_summary
+                    this.value = response.data.article.r_content
+                    this.author = response.data.article.r_author
+                    this.date = response.data.article.r_date.slice(0,10)
+                    // this.orders = response.data.articleList
+                }).catch(error => console.log(error, "error"))
+            },
+            getComment(){
+                this.$axios({
+                    method: "get",
+                    url: "http://127.0.0.1:8888/demo/super/listword",
+                    params: {
+                        r_id: parseInt(this.$route.query.ID)
+                    }
+                }).then(response => {
+                    this.words = response.data.Words
+                }).catch(error => console.log(error, "error"))
+            },
+            getReply(){
+                this.$axios({
+                    method: "get",
+                    url: "http://127.0.0.1:8888/demo/super/listreply",
+                    params: {
+                        r_id: parseInt(this.$route.query.ID)
+                    }
+                }).then(response => {
+                    this.replys = response.data.Reply
+                    this.words.forEach((ele) => {
+                        Object.assign(ele, {replys: []})
+                        Object.assign(ele, {Avator: 'http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg'})
+                    })
+                    for(var i = 0; i < this.replys.length; i++){
+                        for(var j = 0; j < this.words.length; j++){
+                            if(this.replys[i].lr_for_words == this.words[j].lw_id){
+                                this.words[j].replys.push(this.replys[i])
+                            }
                         }
                     }
-                }
-                console.log(this.words)
-                this.loading = false
-            }).catch(error => console.log(error, "error"))
-          },
-          comment(){
-            var now = new Date().getTime();
-            let m = this.$moment(now).format('YYYY-MM-DD h:mm:ss')
-            this.$axios({
-                method: "post",
-                url: "http://127.0.0.1:8888/demo/super/saveWords",
-                data: this.$qs.stringify({
-                    lw_name: localStorage.getItem("name"),
-                    lw_date: m,
-                    lw_content: this.textarea,
-                    lw_for_name: this.author,
-                    lw_for_article_id: parseInt(this.$route.query.ID)
-                })
-            }).then(response => {
-                this.getComment()
-            }).catch(error => console.log(error, "error"))
-          }
-      },
+                    console.log(this.words)
+                    this.loading = false
+                }).catch(error => console.log(error, "error"))
+            },
+            comment(){
+                var now = new Date().getTime();
+                let m = this.$moment(now).format('YYYY-MM-DD h:mm:ss')
+                this.$axios({
+                    method: "post",
+                    url: "http://127.0.0.1:8888/demo/super/saveWords",
+                    data: this.$qs.stringify({
+                        lw_name: localStorage.getItem("name"),
+                        lw_date: m,
+                        lw_content: this.textarea,
+                        lw_for_name: this.author,
+                        lw_for_article_id: parseInt(this.$route.query.ID)
+                    })
+                }).then(response => {
+                    this.getComment()
+                }).catch(error => console.log(error, "error"))
+            }
+        },
      created(){
           this.refresh()
           this.getComment()
           this.getReply()
-      }
+    }
   }
 </script>
 <style scoped>
