@@ -47,7 +47,7 @@
   export default {
     data() {
       return {
-        orders: ""
+        orders: []
       }
     },
     computed:{
@@ -82,7 +82,6 @@
           method: "get",
           url: "http://127.0.0.1:8888/demo/super/listarticle0",
         }).then(response => {
-          console.log(response.data.articleList)
           this.orders = response.data.articleList
         }).catch(error => console.log(error, "error"))
       }

@@ -4,7 +4,7 @@
     <mavon-editor v-model="value"/>
   <el-form ref="form" :model="form" label-width="80px" class="form">
   <el-form-item label="Author">
-    <el-input v-model="form.name"></el-input>
+    <el-input v-model="form.name" :disabled="true"></el-input>
   </el-form-item>
   <el-form-item label="Date">
     <el-col :span="11">
@@ -54,7 +54,13 @@ export default {
         }).then(response => {
           alert("Success!")
         }).catch(error => console.log(error, "error"))
+      },
+      refresh(){
+        this.form.name = localStorage.getItem("name")
       }
+    },
+    mounted(){
+      this.refresh()
     }
 }
 </script>

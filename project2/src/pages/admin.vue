@@ -42,6 +42,7 @@ export default {
                 console.log(typeof response.data)
                 if(response.data === 200){
                     this.$cookies.set('name', this.form.name)
+                    localStorage.setItem("name",this.form.name)
                     this.$router.push('/login')
                 }else{
                     alert('Please Register First')
@@ -58,6 +59,8 @@ export default {
                 })
             }).then(response => {
                 this.$cookies.set('name', this.form.name)
+                localStorage.setItem("name",this.form.name)
+                localstore
                 this.$router.push('/login')
             }).catch(error => console.log(error, "error"))
         }

@@ -47,7 +47,7 @@
   export default {
     data() {
       return {
-        orders: ""
+        orders: []
       }
     },
     computed:{
@@ -57,11 +57,10 @@
     },
     methods: {
       handleEdit(index, row) {
-        console.log(typeof row.r_id);
         this.$axios({
           method: "post",
           url: "http://127.0.0.1:8888/demo/super/recover",
-          params: this.$qs.stringify({
+          data: this.$qs.stringify({
             r_id: row.r_id
           })
         }).then(response => {
@@ -86,7 +85,6 @@
           method: "get",
           url: "http://127.0.0.1:8888/demo/super/listarticle1",
         }).then(response => {
-          console.log(response.data.articleList)
           this.orders = response.data.articleList
         }).catch(error => console.log(error, "error"))
       }
@@ -96,7 +94,6 @@
         method: "get",
         url: "http://127.0.0.1:8888/demo/super/listarticle1",
       }).then(response => {
-        console.log(response.data.articleList)
         this.orders = response.data.articleList
       }).catch(error => console.log(error, "error"))
     }

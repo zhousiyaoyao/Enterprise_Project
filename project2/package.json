@@ -16,6 +16,7 @@
     "qs": "^6.9.3",
     "vue": "^2.5.2",
     "vue-cookies": "^1.7.0",
+    "vue-moment": "^4.1.0",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
