@@ -206,7 +206,8 @@
                         lw_for_article_id: parseInt(this.$route.query.ID)
                     })
                 }).then(response => {
-                    this.$router.go(0)
+                    // this.$router.go(0)
+                    this.getComment()
                 }).catch(error => console.log(error, "error"))
             }
         },

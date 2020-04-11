@@ -31,11 +31,11 @@
         <el-button
           size="mini"
           type="primary"
-          @click="handleView(scope.$index, scope.row)">View</el-button>
+          @click="handleView(scope.$index, scope.row)" >View</el-button>
         <el-button
           size="mini"
           type="danger"
-          @click="handleDelete(scope.$index, scope.row)">Delete</el-button>
+          @click="handleDelete(scope.$index, scope.row)" v-if="show_list">Delete</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -47,7 +47,8 @@
   export default {
     data() {
       return {
-        orders: []
+        orders: [],
+        show_list: localStorage.getItem("name") === 'admin'
       }
     },
     computed:{

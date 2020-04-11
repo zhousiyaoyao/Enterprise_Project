@@ -67,6 +67,8 @@ export default {
                     this.$cookies.set('name', this.form.name)
                     localStorage.setItem("name",this.form.name)
                     this.$router.push('/login')
+                }else if(response.data === 402){
+                    alert('Wrong Password')
                 }else{
                     alert('Please Register First')
                 }

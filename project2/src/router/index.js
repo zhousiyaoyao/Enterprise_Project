@@ -7,6 +7,8 @@ import recycle from '@/pages/recycleBin'
 import mavonEditor from 'mavon-editor'
 import Article from '@/pages/Article'
 import admin from '@/pages/admin'
+import userlist from '@/pages/userlist'
+import profile from '@/pages/profile'
 import 'mavon-editor/dist/css/index.css'
 Vue.use(mavonEditor)
 Vue.use(Router)
@@ -38,6 +40,14 @@ export default new Router({
         path: '/recycle',
         name: 'recycle',
         component: recycle
+      },{
+        path: '/userlist',
+        name: 'userlist',
+        component: userlist
+      },{
+        path: '/profile',
+        name: 'profile',
+        component: profile
       }
     ]
   }

@@ -11,16 +11,19 @@
     </div>
   </el-col>
   </el-row>
+     <footter></footter>
   </div>
 </template>
 
 <script>
 import siderbar from '@/components/siderbar'
 import headder from '@/components/headder'
+import footter from '@/components/footter'
 export default {
   components:{
       siderbar,
       headder,
+      footter
   },
 }
 </script>
