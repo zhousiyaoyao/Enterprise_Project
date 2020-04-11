@@ -36,8 +36,7 @@
             </el-input>
         </div>
         <el-button type="primary" @click="comment">Leave a message</el-button>
-
-        <div class="container" v-loading="loading">
+        <div class="container">
             <div class="comment" v-for="item in words">
                 <div class="info">
                     <img class="avatar" :src="item.Avator" width="36" height="36"/>
@@ -53,9 +52,7 @@
                     <span style="color: green">Reply</span>
                     </span>
                 </div>
-
                 <div class="reply">
-
                     <div class="item" v-for="reply in item.replys">
                         <div class="reply-content">
                             <span class="from-name">{{reply.lr_name}}</span><span>: </span>
@@ -70,9 +67,6 @@
                             </span>
                         </div>
                     </div>
-
-
-
                     <transition name="fade">
                         <div class="input-wrapper" v-if="showItemId === item.lw_id">
                             <el-input class="gray-bg-input"
@@ -80,11 +74,11 @@
                                     type="textarea"
                                     :rows="3"
                                     autofocus
-                                    placeholder="写下你的评论">
+                                    placeholder="Put your comment here">
                             </el-input>
                             <div class="btn-control">
-                            <span class="cancel" @click="cancel">取消</span>
-                            <el-button class="btn" type="success" round @click="commitComment(item)">确定</el-button>
+                            <span class="cancel" @click="cancel">Cancel</span>
+                            <el-button class="btn" type="success" round @click="commitComment(item)">Submit</el-button>
                             </div>
                         </div>
                     </transition>
@@ -112,7 +106,6 @@
               showReply: false,
               inputComment: '',
               showItemId: '',
-              loading: true
           }
       },
       methods: {
@@ -134,13 +127,14 @@
                         lr_for_article_id: item.lw_for_article_id
                     })
                 }).then(response => {
-                    this.getReply()
+                    this.$router.go(0)
                 }).catch(error => console.log(error, "error"))
             },
             showCommentInput(item, reply) {
                 if (reply) {
+                    console.log(reply)
                     localStorage.setItem("replyID",reply.lr_id)
-                    this.inputComment = "@" + reply.lr_for_name + " "
+                    this.inputComment = "@" + reply.lr_name + " "
                 } else {
                     this.inputComment = ''
                 }
@@ -173,17 +167,6 @@
                     }
                 }).then(response => {
                     this.words = response.data.Words
-                }).catch(error => console.log(error, "error"))
-            },
-            getReply(){
-                this.$axios({
-                    method: "get",
-                    url: "http://127.0.0.1:8888/demo/super/listreply",
-                    params: {
-                        r_id: parseInt(this.$route.query.ID)
-                    }
-                }).then(response => {
-                    this.replys = response.data.Reply
                     this.words.forEach((ele) => {
                         Object.assign(ele, {replys: []})
                         Object.assign(ele, {Avator: 'http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg'})
@@ -196,7 +179,17 @@
                         }
                     }
                     console.log(this.words)
-                    this.loading = false
+                }).catch(error => console.log(error, "error"))
+            },
+            getReply(){
+                this.$axios({
+                    method: "get",
+                    url: "http://127.0.0.1:8888/demo/super/listreply",
+                    params: {
+                        r_id: parseInt(this.$route.query.ID)
+                    }
+                }).then(response => {
+                    this.replys = response.data.Reply
                 }).catch(error => console.log(error, "error"))
             },
             comment(){
@@ -213,14 +206,14 @@
                         lw_for_article_id: parseInt(this.$route.query.ID)
                     })
                 }).then(response => {
-                    this.getComment()
+                    this.$router.go(0)
                 }).catch(error => console.log(error, "error"))
             }
         },
-     created(){
-          this.refresh()
-          this.getComment()
-          this.getReply()
+     async mounted(){
+         this.refresh()
+         this.getReply()
+         this.getComment()
     }
   }
 </script>

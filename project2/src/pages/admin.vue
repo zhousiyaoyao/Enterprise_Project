@@ -1,11 +1,14 @@
 <template>
   <div class="body">
-        <el-form label-width="80px" :model="form" class="form">
-            <el-form-item>
+        <div class="header">
+            <h2 class="text-nowrap" style="color: #393D49;text-align:center;padding-top:10%;font-family: Menlo">Article Management System</h2>
+        </div>
+        <el-form label-width="80px" :model="form" class="form" status-icon :rules="rules">
+            <el-form-item prop="name">
                 <el-input v-model="form.name" placeholder="username"></el-input>
             </el-form-item>
-            <el-form-item>
-                <el-input v-model="form.password" placeholder="password"></el-input>
+            <el-form-item prop="password">
+                <el-input type="password" v-model="form.password" placeholder="password"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="login" style="width: 100%">Login</el-button>
@@ -25,10 +28,30 @@ export default {
           name: '',
           password: '',
           type: ''
-        }
+        },
+        rules: {
+          password: [
+            { required: true, validator: this.validatepassword, trigger: 'blur' }
+          ],
+          name: [
+            { required: true, validator: this.validateusername, trigger: 'blur' }
+          ],
+        },
         };
     },
     methods: {
+        validatepassword(rule, value, callback){
+            if(!value){
+                callback(new Error('Please input password'))
+            }
+            callback()
+        },
+        validateusername(rule, value, callback){
+            if(!value){
+                callback(new Error('Please input username'))
+            }
+            callback()
+        },
         login(){
             this.$axios({
                 method: "post",
@@ -60,7 +83,6 @@ export default {
             }).then(response => {
                 this.$cookies.set('name', this.form.name)
                 localStorage.setItem("name",this.form.name)
-                localstore
                 this.$router.push('/login')
             }).catch(error => console.log(error, "error"))
         }
@@ -72,9 +94,9 @@ export default {
     position: absolute;
     width: 400px;
     height: 500px;
-    top: 50%;
-    left: 50%;
-    margin-left: -200px;
+    top: 55%;
+    left: 47%;
+    margin-left: -190px;
     margin-top: -250px;
 }
 .body{
