@@ -2,6 +2,8 @@ package com.zsy.demo.service.impl;
 
 import com.zsy.demo.dao.ArticleDao;
 import com.zsy.demo.entity.Article;
+import com.zsy.demo.entity.Reply;
+import com.zsy.demo.entity.Words;
 import com.zsy.demo.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -47,5 +49,20 @@ public class ArticleServiceImpl implements ArticleService {
     public Article findById(int r_id) {
         return articleDao.findById(r_id);
     }
-
+    @Override
+    public void saveReply(Reply reply) {
+        articleDao.saveReply(reply);
+    }
+    @Override
+    public void saveWords(Words words) {
+        articleDao.saveWords(words);
+    }
+    @Override
+    public List<Words> findByWords(int r_id) {
+        return articleDao.findByWords(r_id);
+    }
+    @Override
+    public List<Reply> findByReply(int r_id) {
+        return articleDao.findByReply(r_id);
+    }
 }

@@ -10,6 +10,9 @@ import com.alibaba.fastjson.JSONObject;
 
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -26,14 +29,18 @@ public class AdminController {
         Admin admin = adminService.login(a_name);
         String code;
         if (admin != null) {
-            if (admin.getA_password().equals(a_password)) {
+            if (admin.getA_name().equals(a_name) && admin.getA_password().equals(a_password)) {
                 session.setAttribute("name", admin.getA_name());
                 response.setHeader("name",session.getId());
                 code = "200";
                 return code;
-            } else {
-                model.addAttribute("message", "wrong password or username");
+            } else if(admin.getA_name().equals(a_name)){
+                model.addAttribute("message", "wrong password");
                 code = "402";
+                return code;
+            } else{
+                model.addAttribute("message", "Not register");
+                code = "403";
                 return code;
             }
         } else {
@@ -65,5 +72,27 @@ public class AdminController {
         Admin info = adminService.findByName(admin.getA_name());
         System.out.println(JSONObject.toJSONString(info));
         return JSONObject.toJSONString(info);
+    }
+
+    @RequestMapping(value = "/userList", method = RequestMethod.GET)
+    @CrossOrigin(origins = "*")
+    public Map<String, Object> getAdminList() {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        List<Admin> list = adminService.getAdminList();
+        System.out.println(list);
+        modelMap.put("adminList", list);
+        return modelMap;
+    }
+
+    @RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
+    @CrossOrigin(origins = "*")
+    public void deleteUser(@RequestParam int a_id) {
+        adminService.deleteUser(a_id);
+    }
+
+    @RequestMapping(value = "/updatePassword", method = RequestMethod.POST)
+    @CrossOrigin(origins = "*")
+    public void deleteUser(@RequestParam String a_password, @RequestParam int a_id) {
+        adminService.updatePassword(a_password,a_id);
     }
 }

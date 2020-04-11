@@ -22,4 +22,19 @@
         select a_name from admins where a_name = #{a_name}
     </select>
 
+    <select id="getAdminList" resultType="com.zsy.demo.entity.Admin">
+        SELECT *
+        FROM admins
+        ORDER BY a_id
+    </select>
+
+    <delete id="deleteUser" parameterType="int">
+        delete from admins where a_id = #{a_id}
+    </delete>
+
+    <update id="updatePassword" parameterType="com.zsy.demo.entity.Admin">
+        update admins
+        set a_password = #{a_password}
+        where a_id = #{a_id}
+    </update>
 </mapper>

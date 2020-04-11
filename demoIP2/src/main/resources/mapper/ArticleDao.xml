@@ -58,4 +58,54 @@
     <select id="findById" parameterType="int" resultType="com.zsy.demo.entity.Article">
         select * from article where r_id = #{r_id}
     </select>
+
+
+    <insert id="saveReply" parameterType="com.zsy.demo.entity.Reply">
+        insert into reply(
+        lr_name,
+        lr_date,
+        lr_content,
+        lr_for_name,
+        lr_for_words,
+        lr_for_reply,
+        lr_for_article_id
+        )
+        values(
+        #{lr_name},
+        #{lr_date},
+        #{lr_content},
+        #{lr_for_name},
+        #{lr_for_words},
+        #{lr_for_reply},
+        #{lr_for_article_id}
+        )
+    </insert>
+
+    <insert id="saveWords" parameterType="com.zsy.demo.entity.Words">
+        insert into words(
+        lw_name,
+        lw_date,
+        lw_content,
+        lw_for_name,
+        lw_for_article_id
+        )
+        values(
+        #{lw_name},
+        #{lw_date},
+        #{lw_content},
+        #{lw_for_name},
+        #{lw_for_article_id}
+        )
+    </insert>
+
+    <select id="findByWords" parameterType="int" resultType="com.zsy.demo.entity.Words">
+        select * from words
+        where lw_for_article_id = #{ID}
+    </select>
+
+    <select id="findByReply" parameterType="int" resultType="com.zsy.demo.entity.Reply">
+        select * from reply
+        where lr_for_article_id = #{ID}
+    </select>
+
 </mapper>

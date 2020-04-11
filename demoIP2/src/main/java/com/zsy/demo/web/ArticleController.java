@@ -1,6 +1,8 @@
 package com.zsy.demo.web;
 
 import com.zsy.demo.entity.Article;
+import com.zsy.demo.entity.Reply;
+import com.zsy.demo.entity.Words;
 import com.zsy.demo.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*",allowCredentials="true",allowedHeaders = "",methods = {})
 @RequestMapping("/super")
 public class ArticleController {
     @Autowired
@@ -84,4 +86,44 @@ public class ArticleController {
         return modelMap;
     }
 
+    @RequestMapping(value = "/saveReply", method = RequestMethod.POST)
+    @CrossOrigin(origins = "*")
+    public String saveReply(Reply reply){
+        if(reply != null){
+            articleService.saveReply(reply);
+            return null;
+        }else{
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/saveWords", method = RequestMethod.POST)
+    @CrossOrigin(origins = "*")
+    public String saveWords(Words words){
+        if(words != null){
+            String r_id = words.getLw_for_article_id();
+            articleService.saveWords(words);
+            return null;
+        }else{
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/listword", method = RequestMethod.GET)
+    @CrossOrigin(origins = "*",allowCredentials="true",allowedHeaders = "",methods = {})
+    public Map<String, Object> findByWords(@RequestParam int r_id){
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        List<Words> list = articleService.findByWords(r_id);
+        modelMap.put("Words", list);
+        return modelMap;
+    }
+
+    @RequestMapping(value = "/listreply", method = RequestMethod.GET)
+    @CrossOrigin(origins = "*",allowCredentials="true",allowedHeaders = "",methods = {})
+    public Map<String, Object> findByReply(@RequestParam int r_id){
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        List<Reply> list = articleService.findByReply(r_id);
+        modelMap.put("Reply", list);
+        return modelMap;
+    }
 }

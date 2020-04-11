@@ -6,6 +6,8 @@ import com.zsy.demo.dao.AdminDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AdminServiceImpl implements AdminService{
 
@@ -23,4 +25,17 @@ public class AdminServiceImpl implements AdminService{
     public Admin findByName(String a_name){
         return adminDao.findByName(a_name);
     }
+
+    public List<Admin> getAdminList() {
+        return adminDao.getAdminList();
+    }
+
+    public void deleteUser(int a_id){
+        adminDao.deleteUser(a_id);
+    }
+
+    public void updatePassword(String a_password, int a_id){
+        adminDao.updatePassword(a_password, a_id);
+    }
+
 }
